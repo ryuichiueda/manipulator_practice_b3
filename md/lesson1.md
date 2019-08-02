@@ -43,3 +43,20 @@ Windows編
 <img width="56%" src="./figs/ubuntu18_download.png" />
 <img width="40%" src="./figs/wsl_enable.png" />
 
+
+---
+
+### ROSのインストール
+
+* GitHub上のインストールスクリプトを利用
+    * https://github.com/ryuichiueda/ros_setup_scripts_Ubuntu18.04_desktop
+
+```
+$ git clone https://github.com/ryuichiueda/ros_setup_scripts_Ubuntu18.04_desktop.git
+$ cd ros_setup_scripts_Ubuntu18.04_desktop/
+$ sudo apt update
+$ sudo apt upgrade
+$ ./locale.ja.bash
+$ ./step0.bash
+$ ./step1.bash
+```
