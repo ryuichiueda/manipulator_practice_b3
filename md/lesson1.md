@@ -101,4 +101,42 @@ started core service [/rosout]
 
 ---
 
-### ワークスペース
+### ワークスペースの作成
+
+* ワークスペース: プログラム置き場です
+```
+$ cd
+$ mkdir -p catkin_ws/src
+$ cd catkin_ws/src
+$ catkin_init_workspace
+Creating symlink "/home/ueda/catkin_ws/...
+$ cd ..
+$ catkin_make
+```
+
+* 次いで`~/.bashrc`を編集
+```
+$ vi ~/.bashrc
+・・・
+source /opt/ros/melodic/setup.bash
+source ~/catkin_ws/devel/setup.bash             #この行を追加
+export ROS_MASTER_URI=http://localhost:11311
+export ROS_HOSTNAME=localhost
+・・・
+$ source ~/.bashrc
+$ cd ~/catkin_ws/
+$ catkin_make
+```
+
+---
+
+### CRANE-X7のROSパッケージを<br />インストール
+
+```
+$ cd ~/catkin_ws/src
+$ git clone https://github.com/rt-net/crane_x7_ros.git
+$ git clone https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins.git
+$ rosdep install -r -y --from-paths --ignore-src crane_x7_ros
+・・・
+$ ( cd ~/catkin_ws/ && catkin_make )
+```
