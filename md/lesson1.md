@@ -140,3 +140,15 @@ $ rosdep install -r -y --from-paths --ignore-src crane_x7_ros
 ・・・
 $ ( cd ~/catkin_ws/ && catkin_make )
 ```
+
+---
+
+### Xのインストール
+
+---
+
+### RViz、Gazeboの動作確認
+
+```
+$ roslaunch crane_x7_gazebo crane_x7_with_table.launch
+```
