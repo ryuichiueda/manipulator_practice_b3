@@ -61,3 +61,44 @@ $ ./locale.ja.bash
 $ ./step0.bash
 $ ./step1.bash
 ```
+
+---
+
+### 動作確認
+
+```
+$ source ~/.bashrc
+$ roscore
+... logging to /home/ueda/.ros/log/d26a0c78-b52f-11e9-a961-001c4252779e/roslaunch-1C7F-429.log
+Checking log directory for disk usage. This may take awhile.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+
+started roslaunch server http://localhost:49975/
+ros_comm version 1.14.3
+
+
+SUMMARY
+========
+
+PARAMETERS
+ * /rosdistro: melodic
+ * /rosversion: 1.14.3
+
+NODES
+
+auto-starting new master
+process[master]: started with pid [439]
+ROS_MASTER_URI=http://localhost:11311/
+
+setting /run_id to d26a0c78-b52f-11e9-a961-001c4252779e
+process[rosout-1]: started with pid [450]
+started core service [/rosout]
+```
+
+* Windowsがネットワークのアクセスがどうのこうのと文句を言ってきたら「許可」で
+* プログラムの終了は`Ctrl+C`で
+
+---
+
+### ワークスペース
