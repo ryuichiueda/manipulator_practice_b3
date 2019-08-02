@@ -1,6 +1,5 @@
-# LNPR_SLIDES
+# 設計製作論実習3スライド
 
-https://github.com/ryuichiueda/LNPR_BOOK_CODES を使った講義用スライド
+* https://github.com/ryuichiueda/manipulator_practice_b3
 
-* 内容一覧: https://b.ueda.tech/?page=lnpr
 
