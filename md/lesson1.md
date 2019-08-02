@@ -27,6 +27,7 @@ Windows編
     * ROS: [robot operating system](http://wiki.ros.org/)
 * 参考にしたサイト
     * WSL+ROS
+	* [WSL(Windows Subsystem for Linux)でROSを動かす | naonaorange's blog](https://naonaorange.hatenablog.com/entry/2018/11/05/200715)
         * [WSL: Windows Subsystem for Linuxのインストールと設定 | demura.net](https://demura.net/lecture/15062.html)
         * [WSL: RvizやGazeboが起動しない | demura.net](https://demura.net/lecture/15304.html)
         * 注意: 参考になりますが、以後のスライドと設定が微妙に異なります。
