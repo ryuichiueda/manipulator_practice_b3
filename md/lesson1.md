@@ -192,7 +192,10 @@ servers:
     name: osrf
     url: https://api.ignitionrobotics.org #ignitionroboticsに
 ```
-
+* CRANE-X7のサンプルを立ち上げる
 ```
 $ roslaunch crane_x7_gazebo crane_x7_with_table.launch
 ```
+
+<img width="45%" src="./figs/gazebo_rviz.jpeg" />
+
