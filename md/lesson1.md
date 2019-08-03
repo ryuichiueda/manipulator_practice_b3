@@ -199,3 +199,11 @@ $ roslaunch crane_x7_gazebo crane_x7_with_table.launch
 
 <img width="45%" src="./figs/gazebo_rviz.jpeg" />
 
+---
+
+### 不具合の証言
+
+* すんなりいかない場合もあります
+    * 上田研小池さんから
+        * GAZEBOの動作確認の「`~/.ignition/fuel/config.yaml`を編集」のところで、ignitionフォルダが最初がなく、1度Gazeboを立上げたら生成された
+        * 最初`crane_x7_with_table.launch`を起動させたらGazeboの画面がしばらく放置しても真っ黒のままだった。Ctrl+Cした後、`empty_world.launch`を立上げたら普通に表示されたので、もう一度`crane_x7_with_table.launch`を起動したら表示された
