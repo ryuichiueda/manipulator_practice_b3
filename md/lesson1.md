@@ -27,7 +27,7 @@ Windows編
     * ROS: [robot operating system](http://wiki.ros.org/)
 * 参考にしたサイト
     * WSL+ROS
-	* [WSL(Windows Subsystem for Linux)でROSを動かす | naonaorange's blog](https://naonaorange.hatenablog.com/entry/2018/11/05/200715)
+        * [WSL(Windows Subsystem for Linux)でROSを動かす | naonaorange's blog](https://naonaorange.hatenablog.com/entry/2018/11/05/200715)
         * [WSL: Windows Subsystem for Linuxのインストールと設定 | demura.net](https://demura.net/lecture/15062.html)
         * [WSL: RvizやGazeboが起動しない | demura.net](https://demura.net/lecture/15304.html)
         * 注意: 参考になりますが、以後のスライドと設定が微妙に異なります。
@@ -143,11 +143,55 @@ $ ( cd ~/catkin_ws/ && catkin_make )
 
 ---
 
-### Xのインストール
+### X Window Systemのインストール
+
+* X Window System: Unix系OSのGUIのシステム
+    * データを受けて絵を受けるOSとは独立したプログラム
+* プロトコルが決まっているのでXならなんでもいいけどここではXmingをインストール
+    * [OSDNのXmingのページ](https://ja.osdn.net/projects/sfnet_xming/)から`Xming-6-9-0-31-setup.exe`をインストール
+    * `Xming-fonts-7-7-0-10-setup.exe`もインストール
+    * 指示は全部デフォルトのままでよいです
 
 ---
 
-### RViz、Gazeboの動作確認
+### X Window Systemのセットアップ
+
+* Xmingが立ち上がっていることを確認
+<img width="40%" src="./figs/xserver.png" />
+* `~/.bashrc`に設定を書く
+```
+・・・
+export DISPLAY=localhost:0.0   #0.0は上の絵のポップアップで出てくる数字に合わせる
+export LIBGL_ALWAYS_INDIRECT=0
+export GAZEBO_IP=127.0.0.1
+```
+    * 一番下に書いておけばよいです
+
+---
+
+### RVizの動作確認
+
+```
+$ source ~/.bashrc
+$ roscore &
+（しばらく待つ）
+$ rviz
+```
+
+<img width="60%" src="./figs/rviz.png" />
+
+
+---
+
+### Gazeboの動作確認
+
+* `~/.ignition/fuel/config.yaml`を編集
+```
+servers:
+  -
+    name: osrf
+    url: https://api.ignitionrobotics.org #ignitionroboticsに
+```
 
 ```
 $ roslaunch crane_x7_gazebo crane_x7_with_table.launch
