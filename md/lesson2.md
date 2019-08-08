@@ -44,4 +44,9 @@ $ roslaunch crane_x7_gazebo crane_x7_with_table.launch
 
 ---
 
-### 起動
+### <span style="text-transform:none">MoveIt!</span>の操作
+
+* こちらの資料を使わせていただきましょう
+    * [マニピュレータの制御とMoveIt!の利用](https://gbiggs.github.io/ros_moveit_rsj_tutorial/manipulators_and_moveit.html)
+        * [ハードウェアのロボットを制御](https://gbiggs.github.io/ros_moveit_rsj_tutorial/manipulators_and_moveit.html#%E3%83%8F%E3%83%BC%E3%83%89%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AE%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%92%E5%88%B6%E5%BE%A1)のRViz上での操作から順番に操作方法を確認
+
