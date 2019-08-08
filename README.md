@@ -6,4 +6,5 @@
 
 
 * contents
-    * [第一回](./lesson1.html)
+    * [第1回](./lesson1.html)
+    * [第2回](./lesson2.html)

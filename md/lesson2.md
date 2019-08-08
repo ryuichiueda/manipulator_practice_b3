@@ -14,7 +14,9 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 ---
 
-## <span style="text-transform:none">Move It!</span>を使う
+## <span style="text-transform:none">MoveIt!</span>を使う
+
+* [マニピュレータの制御とMoveIt!の利用](https://gbiggs.github.io/ros_moveit_rsj_tutorial/manipulators_and_moveit.html)
 
 ---
 
