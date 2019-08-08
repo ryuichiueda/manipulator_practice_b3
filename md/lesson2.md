@@ -29,17 +29,19 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 ---
 
-
 ### 起動
 
 ```
 $ roslaunch crane_x7_gazebo crane_x7_with_table.launch
 ```
 
-<img width="60%" src="../figs/launch_x7_gazebo.png" />
+<img width="60%" src="./figs/launch_x7_gazebo.png" />
 
 * 左下: Gazebo
     * シミュレータ
 * 右上: RViz 
     * ROSのモニタリング/コントロールツール
 
+---
+
+### 起動
