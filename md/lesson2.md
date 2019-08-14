@@ -78,7 +78,7 @@ $ cd ~/catkin_ws/src/crane_x7_ros/crane_x7_examples/scripts/
 
 ### ハンドの開閉
 
-* `gripper_action_example.py`
+* [gripper_action_example.py](https://github.com/rt-net/crane_x7_ros/blob/master/crane_x7_examples/scripts/gripper_action_example.py)
     * ハンドを開いて閉じる
     * 動かすときは`rosrun`を用いる（下のコマンド）
 
@@ -102,5 +102,5 @@ $ rosrun crane_x7_examples gripper_action_example.py
 
 ### 決まった姿勢への遷移
 
-* `pose_groupstate_example.py`
-    * 
+* [pose_groupstate_example.py](https://github.com/rt-net/crane_x7_ros/blob/master/crane_x7_examples/scripts/pose_groupstate_example.py)
+    * [SRDFファイル](https://github.com/rt-net/crane_x7_ros/blob/master/crane_x7_moveit_config/config/crane_x7.srdf)に記述されているアームの姿勢を読み込んで姿勢を変更
