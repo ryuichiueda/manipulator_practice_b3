@@ -98,3 +98,9 @@ $ rosrun crane_x7_examples gripper_action_example.py
         * ROSの利点
 * [解説つきコード](https://github.com/ryuichiueda/my_crane_x7_samples/blob/master/scripts/gripper_action_example.py)
 
+---
+
+### 決まった姿勢への遷移
+
+* `pose_groupstate_example.py`
+    * 
