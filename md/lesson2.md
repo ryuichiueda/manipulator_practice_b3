@@ -84,3 +84,12 @@ $ cd ~/catkin_ws/src/crane_x7_ros/crane_x7_examples/scripts/
 ```
 $ rosrun crane_x7_examples gripper_action_example.py 
 ```
+
+---
+
+### ハンドが開閉する仕組み
+
+* ROSのアクションという仕組みを使用
+    * サンプルプログラムと、裏で動いているシステム側のプログラム（システムプログラムと呼ぶ）が連携して動作
+        * サンプルプログラム: ある動作をシステムプログラムに依頼して待つ
+        * システムプログラム: ロボットに動きを伝える
