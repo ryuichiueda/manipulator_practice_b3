@@ -80,7 +80,8 @@ $ cd ~/catkin_ws/src/crane_x7_ros/crane_x7_examples/scripts/
 
 * `gripper_action_example.py`
     * ハンドを開いて閉じる
-    * 動かし方
+    * 動かすときは`rosrun`を用いる（下のコマンド）
+
 ```
 $ rosrun crane_x7_examples gripper_action_example.py 
 ```
