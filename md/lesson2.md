@@ -52,3 +52,35 @@ $ roslaunch crane_x7_gazebo crane_x7_with_table.launch
         * ちょっとボタンやプルダウンの項目が違うので注意
 * やること
     * ランダムに姿勢を選んで計画->実行
+
+---
+
+## サンプルコードを動かす
+
+---
+
+### 準備
+
+* Gazeboを立ち上げておく
+```
+$ roslaunch crane_x7_gazebo crane_x7_with_table.launch
+```
+<img width="50%" src="../figs/gazebo_hand.png" />
+* サンプルプログラムのディレクトリに移動
+```
+$ cd ~/catkin_ws/src/crane_x7_ros/crane_x7_examples/scripts/
+```
+
+
+
+
+---
+
+### ハンドの開閉
+
+* `gripper_action_example.py`
+    * ハンドを開いて閉じる
+    * 動かし方
+```
+$ rosrun crane_x7_examples gripper_action_example.py 
+```
