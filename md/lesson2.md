@@ -93,12 +93,7 @@ $ rosrun crane_x7_examples gripper_action_example.py
     * サンプルプログラムと、裏で動いているシステム側のプログラム（システムプログラムと呼ぶ）が連携して動作
         * サンプルプログラム: ある動作をシステムプログラムに依頼して待つ
         * システムプログラム: ロボットに動きを伝える
-        
----
+    * このような構成をとることでGazeboでも実機でも同じサンプルで動く
+        * ROSの利点
+* [解説つきコード](https://github.com/ryuichiueda/my_crane_x7_samples/blob/master/scripts/gripper_action_example.py)
 
-### コード
-
-* アクションクライアントの作成
-```
-self._client = actionlib.SimpleActionClient("/crane_x7/gripper_controller/gripper_cmd",GripperCommandAction)
-```
