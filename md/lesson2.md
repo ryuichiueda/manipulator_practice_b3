@@ -104,3 +104,8 @@ $ rosrun crane_x7_examples gripper_action_example.py
 
 * [pose_groupstate_example.py](https://github.com/rt-net/crane_x7_ros/blob/master/crane_x7_examples/scripts/pose_groupstate_example.py)
     * [SRDFファイル](https://github.com/rt-net/crane_x7_ros/blob/master/crane_x7_moveit_config/config/crane_x7.srdf)に記述されているアームの姿勢を読み込んで姿勢を変更
+        * `group`: リンクやジョイントをグループ化
+        * `group_state`: 各ジョイントの角度を指定してロボットの特定の姿勢を作ったもの
+        * `virtual_joint`: 環境にロボットを固定する仮想ジョイント
+        * `distable_collisions`: 衝突判定を無効に
+* [解説つきコード](https://github.com/ryuichiueda/my_crane_x7_samples/blob/master/scripts/pose_groupstate_example.py)
