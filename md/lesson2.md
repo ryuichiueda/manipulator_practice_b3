@@ -109,3 +109,41 @@ $ rosrun crane_x7_examples gripper_action_example.py
         * `virtual_joint`: 環境にロボットを固定する仮想ジョイント
         * `distable_collisions`: 衝突判定を無効に
 * [解説つきコード](https://github.com/ryuichiueda/my_crane_x7_samples/blob/master/scripts/pose_groupstate_example.py)
+
+---
+
+### 自身のROSパッケージを作る
+
+* 空のパッケージを作り、`pose_groupstate_example.py`をコピー
+
+```
+$ cd ~/catkin_ws/src/
+$ catkin_create_pkg my_crane_x7 rospy
+$ cd my_crane_x7
+$ mkdir scripts
+$ cd scripts/
+$ cp ~/catkin_ws/src/crane_x7_ros/crane_x7_examples/scripts/pose_groupstate_example.py ./
+$ ls
+pose_groupstate_example.py
+```
+
+---
+
+### 自身のROSパッケージを動かす
+
+* 動かしてみましょう
+```
+$ source ~/.bashrc
+（別の端末で）$ $ roslaunch crane_x7_gazebo crane_x7_with_table.launch 
+$ rosrun my_crane_x7 pose_groupstate_example.py 
+```
+
+---
+
+### 自身のリポジトリを作る
+
+* やること
+    * GitHubのアカウント作成
+        * [この資料の「アカウント作成」まで](https://github.com/ryuichiueda/robosys2018/blob/master/10_git.md)
+    * GitHubにリポジトリを追加
+	* `my_crane_x7`とでもしておきましょう
