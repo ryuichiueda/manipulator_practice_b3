@@ -58,3 +58,8 @@ To https://github.com/ryuichiueda/my_crane_x7
  * [new branch]      master -> master
 Branch 'master' set up to track remote branch 'master' from 'origin'.
 ```
+
+
+---
+
+### 実機を動かす 

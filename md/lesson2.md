@@ -144,3 +144,4 @@ $ rosrun my_crane_x7 pose_groupstate_example.py
 ### 実習
 
 * コードやSRDFなどをいじってロボットに所定の動きをさせてみましょう。
+
