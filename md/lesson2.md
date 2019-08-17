@@ -115,6 +115,7 @@ $ rosrun crane_x7_examples gripper_action_example.py
 ### 自身のROSパッケージを作る
 
 * 空のパッケージを作り、`pose_groupstate_example.py`をコピー
+    * パッケージの名前については強いこだわりがなければ`my_crane_x7`とでもしておきましょう
 
 ```
 $ cd ~/catkin_ws/src/
