@@ -140,10 +140,6 @@ $ rosrun my_crane_x7 pose_groupstate_example.py
 
 ---
 
-### 自身のリポジトリを作る
+### 実習
 
-* やること
-    * GitHubのアカウント作成
-        * [この資料の「アカウント作成」まで](https://github.com/ryuichiueda/robosys2018/blob/master/10_git.md)
-    * GitHubにリポジトリを追加
-	* `my_crane_x7`とでもしておきましょう
+* コードやSRDFなどをいじってロボットに所定の動きをさせてみましょう。
