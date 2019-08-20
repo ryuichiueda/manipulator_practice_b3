@@ -44,6 +44,7 @@ $ source ~/.bashrc
 ### シミュレーション環境の動作確認
 
 * とりあえず箱を隠してみましょう
+    * `table.world`（worldファイル）
     * 次の手順で箱が消えることを確認
 
 ```
@@ -64,3 +65,17 @@ $ vi worlds/table.world
 $ roslaunch my_crane_x7_gazebo crane_x7_with_table.launch 
 ```
 
+---
+
+### カメラをロボットに取り付ける
+
+* ロボットのモデルのリポジトリを作成
+    * `crane_x7_description`から`my_crane_x7_description`を作成
+    * パッケージの名前が記述されているところを修正
+* 手順
+
+```
+$ cd ~/catkin_ws/src/
+$ cp -r crane_x7_ros/crane_x7_description/ ./my_crane_x7_description
+$ sed -i 's/crane_x7_description/my_&/g' CMakeLists.txt package.xml launch/display.launch urdf/*
+```
