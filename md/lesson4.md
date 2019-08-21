@@ -67,15 +67,92 @@ $ roslaunch my_crane_x7_gazebo crane_x7_with_table.launch
 
 ---
 
-### カメラをロボットに取り付ける
+### カメラをロボットに取り付ける<br />（準備）
 
 * ロボットのモデルのリポジトリを作成
     * `crane_x7_description`から`my_crane_x7_description`を作成
     * パッケージの名前が記述されているところを修正
-* 手順
+    * `my_crane_x7_gazebo`の中で`crane_x7_description`を`my_crane_x7_description`に変更
 
 ```
 $ cd ~/catkin_ws/src/
 $ cp -r crane_x7_ros/crane_x7_description/ ./my_crane_x7_description
 $ sed -i 's/crane_x7_description/my_&/g' CMakeLists.txt package.xml launch/display.launch urdf/*
+$ roscd my_crane_x7_gazebo/
+$ sed -i 's/crane_x7_description/my_&/g' package.xml launch/crane_x7_with_table.launch
 ```
+
+---
+
+### カメラスタンドの取り付け（1/4）
+
+* 手順
+    * `my_crane_x7_description/urdf/crane_x7.xacro`ファイルに次のように1行追加
+        * urdfファイル: ロボットのリンクや関節を記述したファイル 
+        * xacroファイル: urdfファイルを簡潔に書いたもの
+
+```
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+・・・
+  <xacro:include filename="$(find my_crane_x7_description)/urdf/crane_x7_wide_two_finger_gripper.xacro"/>
+  <!--追加！！！-->
+  <xacro:include filename="$(find my_crane_x7_description)/urdf/camera.urdf"/>
+・・・
+```
+
+---
+
+### カメラスタンドの取り付け（2/4）
+
+* `camera.urdf`の記述
+    * XMLで以下を記述
+        * リンク（棒）を一本
+        * ロボットとリンクを取り付ける固定関節を一個
+
+```
+<?xml version="1.0"?>
+
+<robot name="camera">
+  <link name="camera_stand_link">
+      リンクに関する記述（次ページ）
+  </link>
+
+  <joint name="camera_stand_joint" type="fixed">
+      関節に関する記述（次々ページ）
+  </joint>
+
+</robot>
+```
+
+---
+
+### カメラスタンドの取り付け（3/4）
+
+* リンクの記述
+    * inertia: 慣性モーメント（この例では適当に軽く設定してある）
+    * visual: 見かけの姿（20cm、半径1cmの丸棒）
+
+```
+<link name="camera_stand_link">
+  <inertial>
+    <mass value="1e-6"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+  </inertial>
+  <visual>
+    <geometry>
+      <cylinder length="0.20" radius="0.01"/>
+    </geometry>
+    <material name="white">
+      <color rgba="0 0 0 1" />
+    </material>
+  </visual>
+</link>
+```
+
+---
+
+### カメラスタンドの取り付け（4/4）
+
+* 関節の記述
