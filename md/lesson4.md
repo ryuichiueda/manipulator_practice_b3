@@ -114,6 +114,20 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 ---
 
+### Gazebo上での確認
+
+* 手首の横に箱が出て、アームを動かすと一緒に動く
+    * 箱がロボットにめり込んでいるとMoveIt!は動かないので注意
+
+```
+（Gazeboのロボットを立ち上げておく）
+$ rosrun crane_x7_examples pose_groupstate_example.py 
+```
+
+<img width="65%" src="../figs/camera_attached_robot.png" />
+
+---
+
 ### カメラの機能の記述
 
 * 作った箱をGazeboの世界を覗くためのカメラにする
@@ -146,15 +160,18 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 ```
 $ sudo apt install ros-melodic-image-view
 （`source`等が必要）
+（Gazeboのロボットを立ち上げておく）
 $ rosrun image_view image_view image:=/camera1/image_raw
 ```
 
+<img width="45%" src="../figs/camera_image.png" />
+
+* 本当はカメラの向きをハンドの向きと合わせておいたほうが良い
+    * 各自おまかせします
 
 ---
 
 ### 動作確認（ロボットを動かす）
 
-```
-$ rosrun crane_x7_examples pose_groupstate_example.py 
-```
 
+<video controls src="../figs/robot_camera.mov" />
