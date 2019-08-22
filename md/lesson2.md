@@ -114,18 +114,16 @@ $ rosrun crane_x7_examples gripper_action_example.py
 
 ### 自身のROSパッケージを作る
 
-* 空のパッケージを作り、`pose_groupstate_example.py`をコピー
-    * パッケージの名前については強いこだわりがなければ`my_crane_x7`とでもしておきましょう
+* 今、ワークスペース（`catkin_ws/src`）下にある`catkin_x7_ros`を削除
+* `catkin_x7_ros`をGitHubでフォークしてワークスペースにpull
+
 
 ```
 $ cd ~/catkin_ws/src/
-$ catkin_create_pkg my_crane_x7 rospy
-$ cd my_crane_x7
-$ mkdir scripts
-$ cd scripts/
-$ cp ~/catkin_ws/src/crane_x7_ros/crane_x7_examples/scripts/pose_groupstate_example.py ./
-$ ls
-pose_groupstate_example.py
+$ rm -rf ./catkin_x7_ros
+$ git clone https://github.com/ryuichiueda/crane_x7_ros.git
+$ ( cd ~/catkin_ws && catkin_make )
+$ rosdep install -r -y --from-paths --ignore-src crane_x7_ros
 ```
 
 ---
@@ -135,8 +133,8 @@ pose_groupstate_example.py
 * 動かしてみましょう
 ```
 $ source ~/.bashrc
-（別の端末で）$ $ roslaunch crane_x7_gazebo crane_x7_with_table.launch 
-$ rosrun my_crane_x7 pose_groupstate_example.py 
+（別の端末を開いて）$ roslaunch crane_x7_gazebo crane_x7_with_table.launch 
+$ $ rosrun crane_x7_examples pose_groupstate_example.py 
 ```
 
 ---
@@ -145,3 +143,12 @@ $ rosrun my_crane_x7 pose_groupstate_example.py
 
 * コードやSRDFなどをいじってロボットに所定の動きをさせてみましょう。
 
+---
+
+### 終わったらリポジトリへpush
+
+```
+$ git add -A 
+$ git commit -m "Change a sample"
+$ git push
+```

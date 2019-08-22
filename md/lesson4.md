@@ -21,73 +21,14 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 ---
 
-### シミュレーション環境の構築
-
-* 準備
-    * 自身のシミュレータ環境を設定するリポジトリを作る
-        * `crane_x7_gazebo`を`my_crane_x7_gazebo`としてコピー
-        * パッケージの名前が記述されているところを修正
-* 手順
-```
-$ cd ~/catkin_ws/src/
-$ cp -r crane_x7_ros/crane_x7_gazebo/ ./my_crane_x7_gazebo
-$ cd my_crane_x7_gazebo/
-### crane_x7_gazeboをmy_crane_x7_gazeboに変更 ###
-$ sed -i 's/crane_x7_gazebo/my_&/g' CMakeLists.txt package.xml launch/crane_x7_with_table.launch 
-$ ( cd ~/catkin_ws/ && catkin_make )
-$ source ~/.bashrc 
-```
-* GitHubにリポジトリを作ってpushしておきましょう
-
----
-
-### シミュレーション環境の動作確認
-
-* とりあえず箱を隠してみましょう
-    * `table.world`（worldファイル）
-    * 次の手順で箱が消えることを確認
-
-```
-$ vi worlds/table.world 
-（次のように箱の部分をコメントアウト）
-・・・
-<!-- 
-    <model name="wood_cube_5cm">
-      <include>
-        <uri>model://wood_cube_5cm</uri>
-      </include>
-
-      <pose>0.20 0 1.0 0 0 0</pose>
-    </model>
--->
-・・・
-（閉じる）
-$ roslaunch my_crane_x7_gazebo crane_x7_with_table.launch 
-```
-
----
-
-### カメラをロボットに取り付ける<br />（準備）
-
-* ロボットのモデルのリポジトリを作成
-    * `crane_x7_description`から`my_crane_x7_description`を作成
-    * パッケージの名前が記述されているところを修正
-    * `my_crane_x7_gazebo`の中で`crane_x7_description`を`my_crane_x7_description`に変更
-
-```
-$ cd ~/catkin_ws/src/
-$ cp -r crane_x7_ros/crane_x7_description/ ./my_crane_x7_description
-$ sed -i 's/crane_x7_description/my_&/g' CMakeLists.txt package.xml launch/display.launch urdf/*
-$ roscd my_crane_x7_gazebo/
-$ sed -i 's/crane_x7_description/my_&/g' package.xml launch/crane_x7_with_table.launch
-```
+### Gazebo環境内でのカメラの利用
 
 ---
 
 ### カメラスタンドの取り付け（1/4）
 
 * 手順
-    * `my_crane_x7_description/urdf/crane_x7.xacro`ファイルに次のように1行追加
+    * `crane_x7_ros/crane_x7_description/urdf/crane_x7.xacro`ファイルに次のように1行追加
         * urdfファイル: ロボットのリンクや関節を記述したファイル 
         * xacroファイル: urdfファイルを簡潔に書いたもの
 
@@ -95,9 +36,9 @@ $ sed -i 's/crane_x7_description/my_&/g' package.xml launch/crane_x7_with_table.
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 ・・・
-  <xacro:include filename="$(find my_crane_x7_description)/urdf/crane_x7_wide_two_finger_gripper.xacro"/>
+  <xacro:include filename="$(find crane_x7_description)/urdf/crane_x7_wide_two_finger_gripper.xacro"/>
   <!--追加！！！-->
-  <xacro:include filename="$(find my_crane_x7_description)/urdf/camera.urdf"/>
+  <xacro:include filename="$(find crane_x7_description)/urdf/camera.urdf"/>
 ・・・
 ```
 
@@ -105,7 +46,7 @@ $ sed -i 's/crane_x7_description/my_&/g' package.xml launch/crane_x7_with_table.
 
 ### カメラスタンドの取り付け（2/4）
 
-* `camera.urdf`の記述
+* `~/catkin_ws/src/crane_x7_ros/crane_x7_description/urdf/camera.urdf`の記述
     * XMLで以下を記述
         * リンク（棒）を一本
         * ロボットとリンクを取り付ける固定関節を一個
@@ -156,3 +97,27 @@ $ sed -i 's/crane_x7_description/my_&/g' package.xml launch/crane_x7_with_table.
 ### カメラスタンドの取り付け（4/4）
 
 * 関節の記述
+    * `parent, child`に関節の両側のリンクを指定
+    * `origin`が関節の位置（`parent`基準）
+        * `rpy`はロール・ピッチ・ヨー
+
+```
+<joint name="camera_stand_joint" type="fixed">
+  <parent link="crane_x7_gripper_base_link"/>
+  <child  link="camera_stand_link"/>
+  <origin xyz="0 0 0" rpy="1.570796326795 1.570796326795 0"/>
+</joint>
+
+```
+
+---
+
+### カメラスタンドの取り付け（4/4）
+
+* Gazeboを立ち上げるとハンドの根本に棒が付く
+
+<img width="70%" src="../figs/camera_stand.png" />
+
+
+$ sudo apt install ros-melodic-moveit-setup-assistant
+
