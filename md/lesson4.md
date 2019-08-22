@@ -25,7 +25,7 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 ---
 
-### カメラスタンドの取り付け（1/4）
+### カメラを定義したファイルのリンク追加
 
 * 手順
     * `crane_x7_ros/crane_x7_description/urdf/crane_x7.xacro`ファイルに次のように1行追加
@@ -44,9 +44,9 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 ---
 
-### カメラスタンドの取り付け（2/4）
+### カメラの形状の記述（1/3）
 
-* `~/catkin_ws/src/crane_x7_ros/crane_x7_description/urdf/camera.urdf`の記述
+* `crane_x7_ros/crane_x7_description/urdf/camera.urdf`の記述
     * XMLで以下を記述
         * リンク（棒）を一本
         * ロボットとリンクを取り付ける固定関節を一個
@@ -55,12 +55,13 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 <?xml version="1.0"?>
 
 <robot name="camera">
-  <link name="camera_stand_link">
-      リンクに関する記述（次ページ）
+
+  <link name="camera_link">
+     ・・・リンクに関する記述・・・
   </link>
 
-  <joint name="camera_stand_joint" type="fixed">
-      関節に関する記述（次々ページ）
+  <joint name="camera_joint" type="fixed">
+     ・・・関節に関する記述・・・
   </joint>
 
 </robot>
@@ -68,24 +69,25 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 ---
 
-### カメラスタンドの取り付け（3/4）
+### カメラの形状の記述（2/3）
 
 * リンクの記述
     * inertia: 慣性モーメント（この例では適当に軽く設定してある）
-    * visual: 見かけの姿（20cm、半径1cmの丸棒）
+    * visual: カメラの形状（1x5x3[cm]の箱）
 
 ```
-<link name="camera_stand_link">
+<link name="camera_link">
   <inertial>
     <mass value="1e-6"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
   </inertial>
+
   <visual>
     <geometry>
-      <cylinder length="0.20" radius="0.01"/>
+      <box size="0.01 0.05 0.03"/>
     </geometry>
-    <material name="white">
+    <material name="black">
       <color rgba="0 0 0 1" />
     </material>
   </visual>
@@ -94,30 +96,65 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 ---
 
-### カメラスタンドの取り付け（4/4）
+### カメラの形状の記述（3/3）
 
 * 関節の記述
     * `parent, child`に関節の両側のリンクを指定
     * `origin`が関節の位置（`parent`基準）
         * `rpy`はロール・ピッチ・ヨー
+    * この定義の場合、カメラの箱が宙に浮く
 
 ```
-<joint name="camera_stand_joint" type="fixed">
+<joint name="camera_joint" type="fixed">
   <parent link="crane_x7_gripper_base_link"/>
-  <child  link="camera_stand_link"/>
-  <origin xyz="0 0 0" rpy="1.570796326795 1.570796326795 0"/>
+  <child  link="camera_link"/>
+  <origin xyz="0 0.1 0" rpy="0 1.570796326795 0"/>
 </joint>
-
 ```
 
 ---
 
-### カメラスタンドの取り付け（4/4）
+### カメラの機能の記述
 
-* Gazeboを立ち上げるとハンドの根本に棒が付く
+* 作った箱をGazeboの世界を覗くためのカメラにする
+    * [ここにあるサンプル](http://gazebosim.org/tutorials?tut=ros_gzplugins#Camera)をコピペ
+        * `gazebo`要素を`camera.urdf`の`robot`要素の中に追加
+        * リンクの名前を`camera_link`、カメラの名前を`camera1`にしておく
 
-<img width="70%" src="../figs/camera_stand.png" />
+```
+<gazebo reference="camera_link">
+  <sensor type="camera" name="camera1">
+    <update_rate>30.0</update_rate>
+       ・・・
+    <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>0.0</updateRate>
+      <cameraName>camera1</cameraName>
+      <imageTopicName>image_raw</imageTopicName>
+      <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+      <frameName>camera_link</frameName>
+       ・・・
+    </plugin>
+  </sensor>
+</gazebo>
+```
+
+---
+
+### 動作確認（画像を見る手順）
+
+```
+$ sudo apt install ros-melodic-image-view
+（`source`等が必要）
+$ rosrun image_view image_view image:=/camera1/image_raw
+```
 
 
-$ sudo apt install ros-melodic-moveit-setup-assistant
+---
+
+### 動作確認（ロボットを動かす）
+
+```
+$ rosrun crane_x7_examples pose_groupstate_example.py 
+```
 
