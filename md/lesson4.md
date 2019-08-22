@@ -124,7 +124,7 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 $ rosrun crane_x7_examples pose_groupstate_example.py 
 ```
 
-<img width="65%" src="../figs/camera_attached_robot.png" />
+<img width="65%" src="./figs/camera_attached_robot.png" />
 
 ---
 
@@ -164,7 +164,7 @@ $ sudo apt install ros-melodic-image-view
 $ rosrun image_view image_view image:=/camera1/image_raw
 ```
 
-<img width="45%" src="../figs/camera_image.png" />
+<img width="45%" src="./figs/camera_image.png" />
 
 * 本当はカメラの向きをハンドの向きと合わせておいたほうが良い
     * 各自おまかせします
@@ -174,4 +174,4 @@ $ rosrun image_view image_view image:=/camera1/image_raw
 ### 動作確認（ロボットを動かす）
 
 
-<video controls src="../figs/robot_camera.mov" />
+<video controls src="./figs/robot_camera.mov" />
