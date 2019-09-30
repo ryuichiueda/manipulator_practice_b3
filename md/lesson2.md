@@ -114,13 +114,13 @@ $ rosrun crane_x7_examples gripper_action_example.py
 
 ### 自身のROSパッケージを作る
 
-* 今、ワークスペース（`catkin_ws/src`）下にある`catkin_x7_ros`を削除
-* `catkin_x7_ros`をGitHubでフォークしてワークスペースにpull
+* 今、ワークスペース（`catkin_ws/src`）下にある`crane_x7_ros`を削除
+* `crane_x7_ros`をGitHubでフォークしてワークスペースにpull
 
 
 ```
 $ cd ~/catkin_ws/src/
-$ rm -rf ./catkin_x7_ros
+$ rm -rf ./crane_x7_ros
 $ git clone https://github.com/ryuichiueda/crane_x7_ros.git
 $ ( cd ~/catkin_ws && catkin_make )
 $ rosdep install -r -y --from-paths --ignore-src crane_x7_ros
