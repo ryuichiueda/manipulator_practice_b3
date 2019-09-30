@@ -121,6 +121,7 @@ $ rosrun crane_x7_examples gripper_action_example.py
 ```
 $ cd ~/catkin_ws/src/
 $ rm -rf ./crane_x7_ros
+### ↓ryuichiuedaのところは自身のアカウントで ###
 $ git clone https://github.com/ryuichiueda/crane_x7_ros.git
 $ ( cd ~/catkin_ws && catkin_make )
 $ rosdep install -r -y --from-paths --ignore-src crane_x7_ros
