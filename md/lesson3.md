@@ -32,4 +32,81 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 $ roslaunch crane_x7_control crane_x7_control.launch
 ```
 
+---
 
+### ネットワークの設定（ラズパイ側）
+
+* `/etc/hosts`と`~/.bashrc`の編集
+
+```
+$ sudo vi /etc/hosts
+・・・
+127.0.0.1 localhost
+### 以下追加 ###
+192.168.2.23 raspi
+192.168.2.24 wsl
+```
+
+
+```
+$ vi ~/.bashrc 
+・・・
+source /opt/ros/melodic/setup.bash
+source /home/ubuntu/catkin_ws/devel/setup.bash
+export ROS_MASTER_URI=http://wsl:11311      # wslになっていること
+export ROS_HOSTNAME=raspi                   # raspiになっていること
+$ source ~/.bashrc
+```
+
+---
+
+### ネットワークの設定（WSL側）
+
+* ssh接続可能にする
+* `/etc/hosts`と`~/.bashrc`の編集
+
+```
+$ sudo apt install openssh-server
+$ vi /etc/ssh/sshd_config
+・・・
+PasswordAuthentication yes      #yesにする
+（vi終了）
+$ sudo ssh-keygen -A
+$ sudo service ssh restart
+```
+
+```
+$ sudo vi /etc/hosts
+・・・
+192.168.2.23 raspi
+192.168.2.24 wsl
+```
+
+```
+$ vi ~/.bashrc 
+・・・
+export ROS_MASTER_URI=http://wsl:11311
+export ROS_HOSTNAME=wsl
+（vi終了）
+$ source ~/.bashrc
+```
+
+---
+
+### 接続確認
+
+* WSLからラズパイ、ラズパイからWSLに`raspi`、`wsl`でssh接続
+
+```
+WSL側$ ssh ubuntu@raspi 
+（パスワード）
+ラズパイ側$ ssh ueda@wsl  #ユーザ名は適宜変更
+（パスワード）
+```
+
+* ROSのマスタがWSL、CRANE-X7のコントローラがラズパイ側で動く
+
+```
+WSL側$ roscore 
+ラズパイ側$ roslaunch crane_x7_control crane_x7_control.launch
+```
