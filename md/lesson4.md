@@ -1,6 +1,6 @@
 # 設計製作論実習3
 
-## 第4回
+## 第3回
 
 千葉工業大学 上田 隆一
 
@@ -14,164 +14,99 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 ---
 
-### カメラを扱う
+### 実機を動かす（WSLの場合）
 
-* シミュレータ（Gazebo）
-* 実機
-
----
-
-### Gazebo環境内でのカメラの利用
+* `crane_x7_ros`がセットアップされたRaspberry Pi経由で接続
+    * 現状、WSLからロボットへUSB接続できないのでしょうがなく
+    * マシン同士を有線LANで接続し、以下の方法で接続
+        * https://b.ueda.tech/?post=20190929_windows_raspi
 
 ---
 
-### カメラを定義したファイルのリンク追加
+### ラズパイ側の動作確認
 
-* 手順
-    * `crane_x7_ros/crane_x7_description/urdf/crane_x7.xacro`ファイルに次のように1行追加
-        * urdfファイル: ロボットのリンクや関節を記述したファイル 
-        * xacroファイル: urdfファイルを簡潔に書いたもの
+* ラズパイにsshでログインして次のコマンドを実行
+    * うまくいくとゆっくりマニピュレータが直立
 
 ```
-<?xml version="1.0"?>
-<robot xmlns:xacro="http://ros.org/wiki/xacro">
+$ roslaunch crane_x7_control crane_x7_control.launch
+```
+
+---
+
+### ネットワークの設定（ラズパイ側）
+
+* `/etc/hosts`と`~/.bashrc`の編集
+
+```
+$ sudo vi /etc/hosts
 ・・・
-  <xacro:include filename="$(find crane_x7_description)/urdf/crane_x7_wide_two_finger_gripper.xacro"/>
-  <!--追加！！！-->
-  <xacro:include filename="$(find crane_x7_description)/urdf/camera.urdf"/>
+127.0.0.1 localhost
+### 以下追加 ###
+192.168.2.23 raspi
+192.168.2.24 wsl
+```
+
+
+```
+$ vi ~/.bashrc 
 ・・・
+source /opt/ros/melodic/setup.bash
+source /home/ubuntu/catkin_ws/devel/setup.bash
+export ROS_MASTER_URI=http://wsl:11311      # wslになっていること
+export ROS_HOSTNAME=raspi                   # raspiになっていること
+$ source ~/.bashrc
 ```
 
 ---
 
-### カメラの形状の記述（1/3）
+### ネットワークの設定（WSL側）
 
-* `crane_x7_ros/crane_x7_description/urdf/camera.urdf`の記述
-    * XMLで以下を記述
-        * リンク（棒）を一本
-        * ロボットとリンクを取り付ける固定関節を一個
+* ssh接続可能にする
+* `/etc/hosts`と`~/.bashrc`の編集
 
 ```
-<?xml version="1.0"?>
-
-<robot name="camera">
-
-  <link name="camera_link">
-     ・・・リンクに関する記述・・・
-  </link>
-
-  <joint name="camera_joint" type="fixed">
-     ・・・関節に関する記述・・・
-  </joint>
-
-</robot>
+$ sudo apt install openssh-server
+$ vi /etc/ssh/sshd_config
+・・・
+PasswordAuthentication yes      #yesにする
+（vi終了）
+$ sudo ssh-keygen -A
+$ sudo service ssh restart
 ```
 
----
-
-### カメラの形状の記述（2/3）
-
-* リンクの記述
-    * inertia: 慣性モーメント（この例では適当に軽く設定してある）
-    * visual: カメラの形状（1x5x3[cm]の箱）
+```
+$ sudo vi /etc/hosts
+・・・
+192.168.2.23 raspi
+192.168.2.24 wsl
+```
 
 ```
-<link name="camera_link">
-  <inertial>
-    <mass value="1e-6"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
-  </inertial>
-
-  <visual>
-    <geometry>
-      <box size="0.01 0.05 0.03"/>
-    </geometry>
-    <material name="black">
-      <color rgba="0 0 0 1" />
-    </material>
-  </visual>
-</link>
+$ vi ~/.bashrc 
+・・・
+export ROS_MASTER_URI=http://wsl:11311
+export ROS_HOSTNAME=wsl
+（vi終了）
+$ source ~/.bashrc
 ```
 
 ---
 
-### カメラの形状の記述（3/3）
+### 接続確認
 
-* 関節の記述
-    * `parent, child`に関節の両側のリンクを指定
-    * `origin`が関節の位置（`parent`基準）
-        * `rpy`はロール・ピッチ・ヨー
-    * この定義の場合、カメラの箱が宙に浮く
+* WSLからラズパイ、ラズパイからWSLに`raspi`、`wsl`でssh接続
 
 ```
-<joint name="camera_joint" type="fixed">
-  <parent link="crane_x7_gripper_base_link"/>
-  <child  link="camera_link"/>
-  <origin xyz="0 0.1 0" rpy="0 1.570796326795 0"/>
-</joint>
+WSL側$ ssh ubuntu@raspi 
+（パスワード）
+ラズパイ側$ ssh ueda@wsl  #ユーザ名は適宜変更
+（パスワード）
 ```
 
----
-
-### Gazebo上での確認
-
-* 手首の横に箱が出て、アームを動かすと一緒に動く
-    * 箱がロボットにめり込んでいるとMoveIt!は動かないので注意
+* ROSのマスタがWSL、CRANE-X7のコントローラがラズパイ側で動く
 
 ```
-（Gazeboのロボットを立ち上げておく）
-$ rosrun crane_x7_examples pose_groupstate_example.py 
+WSL側$ roscore 
+ラズパイ側$ roslaunch crane_x7_control crane_x7_control.launch
 ```
-
-<img width="65%" src="./figs/camera_attached_robot.png" />
-
----
-
-### カメラの機能の記述
-
-* 作った箱をGazeboの世界を覗くためのカメラにする
-    * [ここにあるサンプル](http://gazebosim.org/tutorials?tut=ros_gzplugins#Camera)をコピペ
-        * `gazebo`要素を`camera.urdf`の`robot`要素の中に追加
-        * リンクの名前を`camera_link`、カメラの名前を`camera1`にしておく
-
-```
-<gazebo reference="camera_link">
-  <sensor type="camera" name="camera1">
-    <update_rate>30.0</update_rate>
-       ・・・
-    <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>0.0</updateRate>
-      <cameraName>camera1</cameraName>
-      <imageTopicName>image_raw</imageTopicName>
-      <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-      <frameName>camera_link</frameName>
-       ・・・
-    </plugin>
-  </sensor>
-</gazebo>
-```
-
----
-
-### 動作確認（画像を見る手順）
-
-```
-$ sudo apt install ros-melodic-image-view
-（`source`等が必要）
-（Gazeboのロボットを立ち上げておく）
-$ rosrun image_view image_view image:=/camera1/image_raw
-```
-
-<img width="45%" src="./figs/camera_image.png" />
-
-* 本当はカメラの向きをハンドの向きと合わせておいたほうが良い
-    * 各自おまかせします
-
----
-
-### 動作確認（ロボットを動かす）
-
-
-<video controls src="./figs/robot_camera.mov" />
