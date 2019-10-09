@@ -1,6 +1,6 @@
 # 設計製作論実習3
 
-## 第3回
+## 第4回
 
 千葉工業大学 上田 隆一
 
@@ -14,22 +14,16 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 ---
 
-### 実機を動かす（WSLの場合）
-
-* `crane_x7_ros`がセットアップされたRaspberry Pi経由で接続
-    * 現状、WSLからロボットへUSB接続できないのでしょうがなく
-    * マシン同士を有線LANで接続し、以下の方法で接続
-        * https://b.ueda.tech/?post=20190929_windows_raspi
-
----
-
-### ラズパイ側の動作確認
+### 立ち上げ
 
 * ラズパイにsshでログインして次のコマンドを実行
-    * うまくいくとゆっくりマニピュレータが直立
-
+   * うまくいくとゆっくりマニピュレータが直立
 ```
 $ roslaunch crane_x7_control crane_x7_control.launch
+```
+   * さらにアームを動かす
+```
+$ roslaunch 
 ```
 
 ---
