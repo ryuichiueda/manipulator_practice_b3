@@ -17,15 +17,19 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 ### 立ち上げ
 
 * PCにロボットをUSBで接続して次のコマンドを実行
-   * うまくいくとゆっくりマニピュレータが直立
+    * うまくいくとゆっくりマニピュレータが直立
 ```
 $ sudo chmod 777 /dev/ttyUSB0 
 $ roslaunch crane_x7_control crane_x7_control.launch
 ```
-   * さらにアームを動かす
+    * アームを動かす
 ```
 $ roslaunch crane_x7_bringup demo.launch fake_execution:=false
 別の端末で$ rosrun crane_x7_examples pose_groupstate_example.py 
+```
+    * MoveIt!の利用
+```
+$ roslaunch crane_x7_moveit_config demo.launch 
 ```
 
 ---
